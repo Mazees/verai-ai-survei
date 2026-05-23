@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --color-primary: #E86C1D;
+  --color-primary-hover: #9D4300;
+  --color-bg-light: #F4F4F6;
+  --color-bg-card: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-light);
+  color: #18181B; /* Zinc 900 */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

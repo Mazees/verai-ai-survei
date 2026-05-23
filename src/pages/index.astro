@@ -1,0 +1,604 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Array data untuk bagian Tampilan Antarmuka VERA AI (Preview Gallery)
+const previews = [
+  {
+    title: "Idle Mode Vera AI",
+    description: "Ketika Belum Ada Pesanan Yang Masuk Ke Keranjang",
+    image: "/images/vera-1.png",
+    alt: "Idle Mode Vera AI"
+  },
+  {
+    title: "Daftar Menu Vera AI",
+    description: "Ketika User Menanyakan Menu atau VERA menawarkan menu",
+    image: "/images/vera-2.png",
+    alt: "Idle Mode Vera AI"
+  },
+  {
+    title: "Menu Ditambahkan",
+    description: "Ketika Vera Sudah Menambahkan Menu Ke Keranjang",
+    image: "/images/vera-3.png",
+    alt: "Dashboard Realtime Pesanan"
+  },
+  {
+    title: "Pembayaran QRIS",
+    description: "Ketika Pelanggan Menyudahi Transaksi Akan Diarahkan Ke Pembayaran Oleh Vera",
+    image: "/images/vera-4.png",
+    alt: "Dashboard Realtime Pesanan"
+  },
+  {
+    title: "Pembayaran Gagal",
+    description: "Ketika Pelanggan Membatalkan Pembayaran",
+    image: "/images/vera-5.png",
+    alt: "Dashboard Realtime Pesanan"
+  },
+  {
+    title: "Pembayaran Berhasil",
+    description: "Ketika Pelanggan Menyelesaikan Pembayaran",
+    image: "/images/vera-6.png",
+    alt: "Dashboard Realtime Pesanan"
+  },
+  {
+    title: "Keluar dari Mode Kasir",
+    description: "Sistem Akan Langsung Meminta Pin Untuk Keamanan Agar Tidak Ada Pelanggan Yang Menekan Tombol Exit Sembarangan",
+    image: "/images/vera-7.png",
+    alt: "Dashboard Realtime Pesanan"
+  },
+  {
+    title: "Realtime Dashboard",
+    description: "Pantau Pesanan Masuk Secara Instan",
+    image: "/images/vera_dashboard.png",
+    alt: "Dashboard Realtime Pesanan"
+  },
+  {
+    title: "Kelola Menu",
+    description: "List menu dan stok pada restoran",
+    image: "/images/vera_menu.png",
+    alt: "Kelola Daftar Menu VERA AI"
+  },
+  {
+    title: "Edit/Tambah Menu",
+    description: "Ubah atau Tambah harga, nama, dll pada menu",
+    image: "/images/vera_menu.png",
+    alt: "Kelola Daftar Menu VERA AI"
+  },
+  {
+    title: "Edit/Tambah Menu",
+    description: "Ubah atau Tambah harga, nama, dll pada menu",
+    image: "/images/vera_menu-2.png",
+    alt: "Kelola Daftar Menu VERA AI"
+  },
+  {
+    title: "Laporan Penjualan",
+    description: "Analisis performa omzet dan tren mingguan",
+    image: "/images/vera_report.png",
+    alt: "Laporan Analitik Penjualan"
+  },
+  {
+    title: "Konfigurasi Agent",
+    description: "Atur perilaku VERA sesuai keinginanmu",
+    image: "/images/vera_agent.png",
+    alt: "Laporan Analitik Penjualan"
+  }
+];
+
+// Array data untuk bagian Fitur Utama VERA AI
+const features = [
+  {
+    title: "VERA AI & Pembayaran QRIS",
+    description: "Virtual assistant 3D melayani langsung proses pemesanan menu dan menampilkan kode pembayaran QRIS otomatis untuk diselesaikan oleh pelanggan.",
+    icon: "pos"
+  },
+  {
+    title: "Dashboard Realtime",
+    description: "Pantau pesanan masuk secara real-time. Membantu tim dapur mempercepat proses masak dan melacak status pesanan dari setiap nomor meja secara akurat.",
+    icon: "dashboard"
+  },
+  {
+    title: "Kelola Menu Instan",
+    description: "Pengelolaan daftar hidangan, varian harga, diskon promo, dan status ketersediaan bahan baku dalam hitungan detik untuk meminimalisir kesalahan order.",
+    icon: "menu"
+  },
+  {
+    title: "Laporan Penjualan Otomatis",
+    description: "Laporan analisis laba rugi bulanan dan visualisasi grafik pertumbuhan penjualan harian secara rapi untuk keputusan bisnis yang lebih terukur.",
+    icon: "reports"
+  },
+  {
+    title: "Konfigurasi Agen Kustom",
+    description: "Sesuaikan jenis avatar 3D, suara asisten virtual, tingkat keramahan, serta template ucapan menyambut pelanggan sesuai dengan konsep cafe Anda.",
+    icon: "agent"
+  },
+  {
+    title: "Keamanan Dashboard Admin",
+    description: "Ketika Pelanggan ingin memaksa untuk keluar dari halaman kasir dan kembali ke dashboard sistem akan langsung meminta pin untuk keamanan.",
+    icon: "security"
+  }
+];
+
+// Array data untuk bagian FAQ (Pertanyaan Umum)
+const faqs = [
+  {
+    question: "Apa tujuan utama dari pelaksanaan survei VERA AI ini?",
+    answer: "Survei ini adalah bagian dari riset akademis untuk matakuliah UI/UX. Tujuannya adalah memvalidasi konsep, kegunaan antarmuka (UI), dan kenyamanan pengalaman pengguna (UX) dari produk kasir virtual 3D sebelum masuk ke tahap pengembangan teknis lebih lanjut."
+  },
+  {
+    question: "Siapa saja yang diharapkan mengisi kuesioner survei ini?",
+    answer: "Kami mengundang dua kelompok responden: pertama, para pelaku UMKM F&B (pemilik cafe, restoran, outlet kuliner) untuk menilai kelayakan bisnis. Kedua, konsumen umum yang sering berkunjung ke cafe atau restoran untuk menguji respon interaksi dengan kasir virtual."
+  },
+  {
+    question: "Bagaimana kerahasiaan data responden survei ini dijamin?",
+    answer: "Kerahasiaan data Anda adalah prioritas utama kami. Kuesioner ini dikumpulkan secara anonim tanpa meminta informasi sensitif (seperti kata sandi, rekening bank, atau alamat pribadi). Data yang masuk hanya dianalisis secara agregat untuk keperluan riset matakuliah kami."
+  },
+  {
+    question: "Apakah VERA AI sudah menjadi produk kasir siap pakai?",
+    answer: "Saat ini VERA AI masih berada dalam fase riset UI/UX dan pengujian kelayakan konsep (proof of concept). Partisipasi aktif Anda dalam survei ini akan menentukan arah desain fitur dan kelayakan produk ini agar siap dikembangkan menjadi solusi nyata."
+  },
+  {
+    question: "Apakah VERA AI memerlukan instalasi perangkat keras khusus?",
+    answer: "Tidak. VERA AI dirancang berbasis aplikasi web modern yang responsif. Sistem dapat dijalankan langsung menggunakan perangkat tablet Android, iPad, komputer kasir desktop, maupun kios layar sentuh mandiri yang sudah tersedia di outlet Anda."
+  },
+  {
+    question: "Berapa lama waktu yang diperlukan untuk mengisi survei ini?",
+    answer: "Survei ini didesain sangat ringkas dan langsung pada sasaran. Anda hanya memerlukan waktu sekitar 2 menit untuk melengkapi seluruh kuesioner pilihan ganda yang disediakan."
+  }
+];
+---
+
+<Layout title="VERA AI - Sistem Kasir Virtual 3D & POS Cafe Restoran">
+	<!-- Navigation Bar -->
+	<header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md">
+		<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+			<!-- Logo -->
+			<a href="#hero" class="flex items-center space-x-3" id="nav-logo">
+				<img src="/images/icon.png" alt="Logo VERA AI" class="w-10 h-10 object-contain rounded-xl" />
+				<span class="font-extrabold text-2xl tracking-tight text-slate-900">VERA<span class="text-primary">.AI</span></span>
+			</a>
+
+			<!-- Desktop Nav Links -->
+			<nav class="hidden md:flex items-center space-x-8">
+				<a href="#about" class="text-slate-600 hover:text-primary font-medium transition-colors">Tentang</a>
+				<a href="#features" class="text-slate-600 hover:text-primary font-medium transition-colors">Fitur</a>
+				<a href="#preview" class="text-slate-600 hover:text-primary font-medium transition-colors">Preview</a>
+				<a href="#faq" class="text-slate-600 hover:text-primary font-medium transition-colors">FAQ</a>
+			</nav>
+
+			<!-- CTA Button Desktop -->
+			<div class="hidden md:block">
+				<a 
+					href="#survey-section" 
+					class="bg-primary text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-primary-hover transition-colors inline-block text-center"
+					id="btn-nav-survey"
+				>
+					Ikut Survei
+				</a>
+			</div>
+
+			<!-- Mobile Menu Button -->
+			<button 
+				id="mobile-menu-toggle" 
+				class="md:hidden p-2 text-slate-700 hover:text-primary focus:outline-none"
+				aria-label="Buka Menu"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+				</svg>
+			</button>
+		</div>
+
+		<!-- Mobile Navigation Menu Overlay -->
+		<div id="mobile-menu" class="hidden md:hidden bg-white px-6 py-6 space-y-4 border-t-none">
+			<a href="#" class="block text-lg text-slate-600 hover:text-primary font-medium py-2">Beranda</a>
+			<a href="#about" class="block text-lg text-slate-600 hover:text-primary font-medium py-2">Tentang</a>
+			<a href="#features" class="block text-lg text-slate-600 hover:text-primary font-medium py-2">Fitur</a>
+			<a href="#preview" class="block text-lg text-slate-600 hover:text-primary font-medium py-2">Preview</a>
+			<a href="#faq" class="block text-lg text-slate-600 hover:text-primary font-medium py-2">FAQ</a>
+			<a 
+				href="#survey-section" 
+				class="block bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-hover text-center transition-colors mt-4"
+				id="btn-mobile-nav-survey"
+			>
+				Ikut Survei
+			</a>
+		</div>
+	</header>
+
+	<main class="flex-grow">
+		<!-- Hero Section -->
+		<section id="hero" class="max-w-7xl h-[calc(100vh-76px)] mx-auto px-6 py-12 md:py-20 flex flex-col md:flex-row items-center gap-12">
+			<!-- Hero Content -->
+			<div class="flex-1 space-y-6 text-left">
+				<div class="inline-block bg-white px-4 py-1.5 rounded-full">
+					<span class="text-sm font-semibold text-primary uppercase tracking-wider">UI UX RESEARCH PROJECT</span>
+				</div>
+				<h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
+					Kasir Virtual 3D <br class="hidden lg:inline"/>Berbasis Kecerdasan Buatan
+				</h1>
+				<p class="text-lg text-slate-600 max-w-xl leading-relaxed">
+					VERA AI mendefinisikan ulang pelayanan F&B melalui asisten kasir virtual 3D interaktif yang menyapa pelanggan, merekomendasikan menu secara personal, dan memproses transaksi QRIS secara langsung.
+				</p>
+				<div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+					<a 
+						href="#survey-section" 
+						class="bg-primary text-white text-center px-8 py-4 rounded-2xl font-bold text-lg hover:bg-primary-hover transition-colors"
+						id="btn-hero-survey"
+					>
+						Isi Survei Penelitian
+					</a>
+					<a 
+						href="#about" 
+						class="bg-white text-slate-700 text-center px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-100 transition-colors"
+						id="btn-hero-secondary"
+					>
+						Pelajari VERA
+					</a>
+				</div>
+				<div class="flex items-center space-x-2 text-sm text-slate-500 pt-1">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+					</svg>
+					<span>Hanya Butuh 2 Menit &bull; Data Anda Dijamin Anonim</span>
+				</div>
+			</div>
+
+			<!-- Hero Visual -->
+			<div class="flex-1 w-full max-w-lg md:max-w-none">
+				<div class="bg-white rounded-3xl overflow-hidden p-4">
+					<img 
+						src="/images/vera_hero.png" 
+						alt="VERA AI 3D Virtual Cashier Assistant" 
+						class="w-full h-auto rounded-2xl object-cover aspect-[4/3] sm:aspect-[16/10] md:aspect-square"
+						id="hero-main-image"
+					/>
+				</div>
+			</div>
+		</section>
+
+		<!-- About Section -->
+		<section id="about" class="bg-white py-16 md:py-24">
+			<div class="max-w-7xl mx-auto px-6">
+				<div class="max-w-3xl mx-auto text-center space-y-6">
+					<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+						Solusi Kasir Masa Depan untuk UMKM Kuliner
+					</h2>
+					<p class="text-lg text-slate-600 leading-relaxed">
+						VERA AI lahir sebagai respons terhadap tantangan efisiensi dan interaksi pelanggan di industri kuliner. Kami menggabungkan antarmuka kasir modern (POS) dengan visualisasi asisten kasir virtual 3D interaktif yang menyerupai Vtuber.
+					</p>
+				</div>
+
+				<div class="grid md:grid-cols-2 gap-12 items-center mt-16">
+					<!-- Visual Box -->
+					<div class="bg-bg-light rounded-3xl p-6">
+						<img 
+							src="/images/vera_dashboard.png" 
+							alt="VERA AI Dashboard Preview" 
+							class="w-full h-auto rounded-2xl object-cover aspect-[16/10]"
+						/>
+					</div>
+					<!-- Details -->
+					<div class="space-y-6">
+						<div class="bg-bg-light p-6 rounded-2xl">
+							<h3 class="text-xl font-bold text-slate-900 mb-2">Interaksi Layaknya Manusia</h3>
+							<p class="text-slate-600">
+								Asisten virtual 3D bergerak responsif dan berbicara secara alami, memandu pelanggan memilih pesanan favorit mereka dengan ramah.
+							</p>
+						</div>
+						<div class="bg-bg-light p-6 rounded-2xl">
+							<h3 class="text-xl font-bold text-slate-900 mb-2">Ditargetkan untuk UMKM F&B</h3>
+							<p class="text-slate-600">
+								Dirancang khusus dengan model sewa/beli yang terjangkau agar cafe dan restoran lokal dapat bersaing dengan jaringan waralaba besar.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Preview VERA AI Section (Gallery + Lightbox) -->
+		<section id="preview" class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+			<div class="text-center space-y-4 mb-12">
+				<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+					Tampilan Antarmuka VERA AI
+				</h2>
+				<p class="text-lg text-slate-600 max-w-2xl mx-auto">
+					Klik setiap gambar untuk memperbesar tangkapan layar antarmuka sistem dan alur kerja kasir VERA.
+				</p>
+			</div>
+
+			<!-- Gallery Grid -->
+			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+				{previews.map((preview) => (
+					<button 
+						class="gallery-item group bg-white p-4 rounded-3xl text-left focus:outline-none cursor-pointer"
+						data-large-src={preview.image}
+						aria-label={`Perbesar gambar ${preview.title}`}
+					>
+						<div class="overflow-hidden rounded-2xl bg-bg-light mb-4">
+							<img 
+								src={preview.image} 
+								alt={preview.alt} 
+								class="w-full h-auto object-cover aspect-[16/10] group-hover:scale-105 transition-transform duration-300"
+							/>
+						</div>
+						<h3 class="text-lg font-bold text-slate-900 group-hover:text-primary transition-colors">{preview.title}</h3>
+						<p class="text-sm text-slate-500 mt-1">{preview.description}</p>
+					</button>
+				))}
+			</div>
+
+			<!-- Floating Lightbox Modal -->
+			<div 
+				id="lightbox-modal" 
+				class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 hidden transition-opacity duration-300 opacity-0"
+				role="dialog"
+				aria-modal="true"
+				aria-label="Pratinjau gambar penuh"
+			>
+				<div class="relative bg-white p-3 rounded-3xl max-w-4xl w-full flex flex-col items-center">
+					<button 
+						id="lightbox-close" 
+						class="absolute -top-3 -right-3 sm:top-4 sm:right-4 bg-primary hover:bg-primary-hover text-white p-3 rounded-full focus:outline-none transition-colors" 
+						aria-label="Tutup pratinjau"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+						</svg>
+					</button>
+					<img 
+						id="lightbox-img" 
+						class="w-full h-auto rounded-2xl object-contain max-h-[75vh]" 
+						src="" 
+						alt="Tampilan Antarmuka Kasir VERA AI Lengkap" 
+					/>
+				</div>
+			</div>
+		</section>
+
+		<!-- Features Section -->
+		<section id="features" class="bg-white py-16 md:py-24">
+			<div class="max-w-7xl mx-auto px-6">
+				<div class="text-center space-y-4 mb-16">
+					<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+						Fitur Utama VERA AI
+					</h2>
+					<p class="text-lg text-slate-600 max-w-2xl mx-auto">
+						Teknologi terintegrasi yang memudahkan operasional bisnis kuliner Anda dalam satu dasbor terpadu.
+					</p>
+				</div>
+
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+					{features.map((feature) => (
+						<div class="bg-bg-light p-8 rounded-2xl space-y-4">
+							<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
+								{feature.icon === "pos" && (
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+									</svg>
+								)}
+								{feature.icon === "dashboard" && (
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+									</svg>
+								)}
+								{feature.icon === "menu" && (
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+									</svg>
+								)}
+								{feature.icon === "reports" && (
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z" />
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+									</svg>
+								)}
+								{feature.icon === "agent" && (
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+									</svg>
+								)}
+								{feature.icon === "security" && (
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24">
+										<path d="M0 0h24v24H0z" fill="none" />
+										<path fill="currentColor" d="M6 22h12c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2h-1V7c0-2.76-2.24-5-5-5S7 4.24 7 7v2H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2M9 7c0-1.65 1.35-3 3-3s3 1.35 3 3v2H9zm-3 4h12v9H6z" />
+									</svg>
+
+								)}
+							</div>
+							<h3 class="text-xl font-bold text-slate-900">{feature.title}</h3>
+							<p class="text-slate-600 leading-relaxed text-sm">{feature.description}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- FAQ Section -->
+		<section id="faq" class="max-w-4xl mx-auto px-6 py-16 md:py-24">
+			<div class="text-center space-y-4 mb-12">
+				<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+					Pertanyaan Umum (FAQ)
+				</h2>
+				<p class="text-lg text-slate-600">
+					Informasi praktis seputar fungsionalitas dan pemanfaatan sistem VERA AI.
+				</p>
+			</div>
+
+			<!-- FAQ Accordion -->
+			<div class="space-y-4">
+				{faqs.map((faq) => (
+					<div class="faq-item bg-white rounded-2xl overflow-hidden cursor-pointer transition-all duration-200">
+						<div class="faq-trigger flex justify-between items-center p-6 select-none">
+							<h3 class="font-bold text-lg text-slate-900">{faq.question}</h3>
+							<span class="faq-icon text-primary transition-transform duration-200">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+								</svg>
+							</span>
+						</div>
+						<div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+							<p class="px-6 pb-6 text-slate-600 leading-relaxed">{faq.answer}</p>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- Survey CTA Section -->
+		<section id="survey-section" class="max-w-5xl mx-auto px-6 pb-24">
+			<div class="bg-white rounded-3xl p-8 md:p-16 text-center space-y-8">
+				<div class="max-w-2xl mx-auto space-y-4">
+					<h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+						Bantu Kami Menyempurnakan VERA AI
+					</h2>
+					<p class="text-lg text-slate-600 leading-relaxed">
+						Kami membutuhkan waktu 2 menit dari Anda untuk mengisi kuesioner kelayakan produk. Opini berharga Anda akan memandu desain pengalaman pengguna (UX) produk VERA AI agar siap menyokong UMKM Indonesia.
+					</p>
+				</div>
+
+				<div class="flex flex-col items-center justify-center space-y-4">
+					<a 
+						href="https://forms.gle/daw2U5bVZFdXxsNr9 " 
+						target="_blank" 
+						rel="noopener noreferrer" 
+						class="bg-primary text-white px-8 py-5 rounded-2xl font-extrabold text-xl hover:bg-primary-hover transition-colors inline-block w-full sm:w-auto"
+						id="btn-main-survey-cta"
+					>
+						Isi Form Kuesioner Survei
+					</a>
+					<span class="text-sm text-slate-500 font-medium">Format: Google Form &bull; Terbuka untuk Pemilik Bisnis & Konsumen Umum</span>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<!-- Footer -->
+	<footer class="bg-white py-12">
+		<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+			<div class="flex items-center space-x-2.5">
+				<img src="/images/icon.png" alt="Logo VERA AI" class="w-8 h-8 object-contain rounded-lg" />
+				<span class="font-extrabold text-xl tracking-tight text-slate-900">VERA<span class="text-primary">.AI</span></span>
+			</div>
+			<p class="text-sm text-slate-500 text-center md:text-left">
+				&copy; 2026 VERA AI. Dibuat untuk kepentingan Penelitian Riset Akademik Matakuliah UI/UX. Semua hak dilindungi.
+			</p>
+			<div class="flex space-x-6 text-sm text-slate-500">
+				<a href="#" class="hover:text-primary transition-colors">Beranda</a>
+				<a href="#about" class="hover:text-primary transition-colors">Tentang</a>
+				<a href="#features" class="hover:text-primary transition-colors">Fitur</a>
+				<a href="#faq" class="hover:text-primary transition-colors">FAQ</a>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Scripts for Interactivity -->
+	<script>
+		// Mobile Menu Toggle Logic
+		const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+		const mobileMenu = document.getElementById('mobile-menu');
+		const hamburgerIcon = document.getElementById('hamburger-icon');
+
+		if (mobileMenuToggle && mobileMenu && hamburgerIcon) {
+			mobileMenuToggle.addEventListener('click', () => {
+				const isHidden = mobileMenu.classList.contains('hidden');
+				if (isHidden) {
+					mobileMenu.classList.remove('hidden');
+					hamburgerIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // 'X' Close icon
+				} else {
+					mobileMenu.classList.add('hidden');
+					hamburgerIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger icon
+				}
+			});
+
+			// Close mobile menu when a link is clicked
+			mobileMenu.querySelectorAll('a').forEach(link => {
+				link.addEventListener('click', () => {
+					mobileMenu.classList.add('hidden');
+					hamburgerIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+				});
+			});
+		}
+
+		// Lightbox Modal Logic for Gallery Preview
+		const lightboxModal = document.getElementById('lightbox-modal');
+		const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+		const lightboxClose = document.getElementById('lightbox-close');
+		const galleryItems = document.querySelectorAll('.gallery-item');
+
+		if (lightboxModal && lightboxImg && lightboxClose) {
+			galleryItems.forEach(item => {
+				item.addEventListener('click', () => {
+					const largeSrc = item.getAttribute('data-large-src');
+					if (largeSrc) {
+						lightboxImg.src = largeSrc;
+						lightboxModal.classList.remove('hidden');
+						setTimeout(() => {
+							lightboxModal.classList.remove('opacity-0');
+						}, 50);
+					}
+				});
+			});
+
+			const closeLightbox = () => {
+				lightboxModal.classList.add('opacity-0');
+				setTimeout(() => {
+					lightboxModal.classList.add('hidden');
+					lightboxImg.src = '';
+				}, 300);
+			};
+
+			lightboxClose.addEventListener('click', closeLightbox);
+			
+			// Close on background click
+			lightboxModal.addEventListener('click', (e) => {
+				if (e.target === lightboxModal) {
+					closeLightbox();
+				}
+			});
+
+			// Escape key to close
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && !lightboxModal.classList.contains('hidden')) {
+					closeLightbox();
+				}
+			});
+		}
+
+		// FAQ Accordion Logic
+		const faqItems = document.querySelectorAll('.faq-item');
+
+		faqItems.forEach(item => {
+			const trigger = item.querySelector('.faq-trigger');
+			const content = item.querySelector('.faq-content') as HTMLElement;
+			const icon = item.querySelector('.faq-icon') as HTMLElement;
+
+			if (trigger && content && icon) {
+				trigger.addEventListener('click', () => {
+					const isOpen = item.classList.contains('faq-open');
+
+					// Close all other active items
+					faqItems.forEach(otherItem => {
+						if (otherItem !== item) {
+							otherItem.classList.remove('faq-open');
+							const otherContent = otherItem.querySelector('.faq-content') as HTMLElement;
+							const otherIcon = otherItem.querySelector('.faq-icon') as HTMLElement;
+							if (otherContent) otherContent.style.maxHeight = '0';
+							if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+						}
+					});
+
+					// Toggle current item
+					if (isOpen) {
+						item.classList.remove('faq-open');
+						content.style.maxHeight = '0';
+						icon.style.transform = 'rotate(0deg)';
+					} else {
+						item.classList.add('faq-open');
+						content.style.maxHeight = content.scrollHeight + 'px';
+						icon.style.transform = 'rotate(180deg)';
+					}
+				});
+			}
+		});
+	</script>
+</Layout>
